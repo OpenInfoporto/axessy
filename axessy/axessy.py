@@ -60,7 +60,7 @@ class AxessPacket():
             raise TypeError('Invalid or missing timestamp')
      
     def message(self, msg, beep=100, show=2):
-        return "beep="+beep+"\nscreen=\f"+msg+"\nshow="+show
+        return "beep="+str(beep)+"\nscreen=\f"+msg+"\nshow="+str(show)
      
     def sendKeepAlive(self, url, username, password):
         requests.get(url+'/keepalive_req.cgi', auth=(username,password))
