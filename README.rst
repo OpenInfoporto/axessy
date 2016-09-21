@@ -7,6 +7,7 @@ Axessy is a simple package to read and parse messages from AXESS TMC X3 devices.
 ChangeLog
 -------------
 
+    * 0.4: Added gate error messages and events (directions); added system error messages
     * 0.3: Fixed message() method
     * 0.1: First release
 

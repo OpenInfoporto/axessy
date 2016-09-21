@@ -5,10 +5,13 @@ from pytz import timezone
 import requests
 
 class AxessPacket():
-    error_dict = {'00': 'OK', '33': 'Invalid card','34': 'Invalid reason','35': 'Disabled user','36': 'Disabled card','37': 'Expired user','38': 'Not authorized','39': 'User out of time',
-                    '41': 'Missing auth group','42': 'Missing Timemod','44': 'Invalid pincode','45': 'Invalid day','48': 'Invalid edition',
-                    '51': 'Biometric check 1:1 failed / User not found in biometric archive','52': 'Expired card','53': 'Missing CARDS.TXT and CARDRNGE.TXT','54': 'Missing AUTHGRP.TXT',
-                    '55': 'Missing AUTH.TXT', '56': 'Missing TIMEMOD.TXT','59': 'Invalid common code','60': 'Transaction refused by host in online mode'
+    error_dict = {'00': 'OK','03': 'Gate locked','06': 'Gate unlocked','07': 'Gate in emergency mode','08': 'Opening gate','09': 'Busy gate','10': 'Gate out of service','11': 'Gate forced open',
+                    '12': 'Gate unclosed','13': 'Tamper alarm','14': 'Gate management disabled','15': 'Gate single entry','16': 'Gate single exit','17': 'Battery mode','18': 'Alarm',
+                    '21': 'Alarms enabled','22': 'Alarms disabled','23': 'Gate not ready','24': 'Gate unlocked','25': 'Gate open','26': 'Gate transit denied','33': 'Invalid card',
+                    '34': 'Invalid reason','35': 'Disabled user','36': 'Disabled card','37': 'Expired user','38': 'Not authorized','39': 'User out of time','41': 'Missing auth group',
+                    '42': 'Missing Timemod','44': 'Invalid pincode','45': 'Invalid day','48': 'Invalid edition','51': 'Biometric check 1:1 failed / User not found in biometric archive',
+                    '52': 'Expired card','53': 'Missing CARDS.TXT and CARDRNGE.TXT','54': 'Missing AUTHGRP.TXT','55': 'Missing AUTH.TXT', '56': 'Missing TIMEMOD.TXT','59': 'Invalid common code',
+                    '60': 'Transaction refused by host in online mode'
                 }
                 
     ack = "ack=1"
@@ -39,6 +42,10 @@ class AxessPacket():
             self.direction = "OUT"
         elif(data[2] == '1'):
             self.direction = "IN"
+        elif(data[2] == '5'):
+            self.direction = "EVENT_BEGIN"
+        elif(data[2] == '6'):
+            self.direction = "EVENT_END"
 
         self.timestamp = datetime(int(data[0][:4]),int(data[0][4:6]), int(data[0][6:]), int(data[1][:2]), int(data[1][2:4]), int(data[1][4:]))
         self.timestamp = timezone('Europe/Rome').localize(self.timestamp)
